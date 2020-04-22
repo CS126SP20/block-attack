@@ -4,8 +4,9 @@
 #define FINALPROJECT_APPS_MYAPP_H_
 
 #include <cinder/app/App.h>
+#include <Box2D/Box2D.h>
 
-
+using namespace ci;
 namespace myapp {
 
 class MyApp : public cinder::app::App {
@@ -14,7 +15,9 @@ class MyApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
-  void keyDown(cinder::app::KeyEvent) override;
+  void mouseDown(cinder::app::MouseEvent event) override;
+  void DrawSquare();
+
 };
 
 }  // namespace myapp

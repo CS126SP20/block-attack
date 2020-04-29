@@ -17,6 +17,9 @@ class MyApp : public cinder::app::App {
   void draw() override;
   void mouseDown(cinder::app::MouseEvent event) override;
   void DrawSquare();
+  void DrawLine();
+  void DrawLShape();
+  void DrawBomb();
 
 };
 

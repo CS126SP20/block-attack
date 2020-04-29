@@ -1,11 +1,13 @@
 //
-// Created by faris on 4/21/2020.
+// Created by faris on 4/28/2020.
 //
+#define DEGTORAD 0.0174532925199432957f
 
-#include "mylibrary/square.h"
+#include "mylibrary/Bomb.h"
+
 #include "cinder/gl/gl.h"
-
-square::square(b2World* world, const vec2& pos) {
+using namespace ci;
+Bomb::Bomb(b2World* world, const vec2& pos) {
 //  b2Vec2 vertices[3];
 //  vertices[0].Set(0.0f, 0.0f);
 //  vertices[1].Set(100.0f, 0.0f);
@@ -15,13 +17,18 @@ square::square(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
 
-  b2PolygonShape dynamicBox;
-  dynamicBox.SetAsBox(50, 50);
+  b2CircleShape cs;
+  cs.m_p.Set(0,0);
+  cs.m_radius = 10.0f;
   b2FixtureDef fixtureDef;
-  fixtureDef.shape = &dynamicBox;
+  fixtureDef.shape = &cs;
   fixtureDef.density = 1.0f;
   fixtureDef.friction = 0.3f;
-  fixtureDef.restitution = 0.5f;  // bounce
+  fixtureDef.restitution = 0.5f;// bounce
+
   m_body->CreateFixture(&fixtureDef);
+
+
+
 }
 

@@ -13,10 +13,11 @@ using namespace ci;
 
 class square {
     const float BOX_SIZE = 10;
-public:
+
+ public:
+    square(b2World* world, const vec2 &pos);
     b2Body* m_body;
-    square(b2World* world, float size, const vec2 &pos);
-    ~square() {}
+
 };
 
 #endif //FINALPROJECT_SQUARE_H

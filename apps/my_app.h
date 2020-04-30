@@ -20,6 +20,9 @@ class MyApp : public cinder::app::App {
   void DrawLine();
   void DrawLShape();
   void DrawBomb();
+  void DrawMultiplier();
+  void DrawLeftWall();
+  void DrawRightWall();
 
 };
 

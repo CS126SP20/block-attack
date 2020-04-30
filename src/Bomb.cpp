@@ -4,7 +4,6 @@
 #define DEGTORAD 0.0174532925199432957f
 
 #include "mylibrary/Bomb.h"
-
 #include "cinder/gl/gl.h"
 using namespace ci;
 Bomb::Bomb(b2World* world, const vec2& pos) {
@@ -19,13 +18,10 @@ Bomb::Bomb(b2World* world, const vec2& pos) {
 
   b2CircleShape cs;
   cs.m_p.Set(0,0);
-  cs.m_radius = 10.0f;
+  cs.m_radius = 50.0f;
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &cs;
   fixtureDef.density = 1.0f;
-  fixtureDef.friction = 0.3f;
-  fixtureDef.restitution = 0.5f;// bounce
-
   m_body->CreateFixture(&fixtureDef);
 
 

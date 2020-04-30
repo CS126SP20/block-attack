@@ -7,6 +7,9 @@
 #include <mylibrary/LShape.h>
 #include <mylibrary/line.h>
 #include <mylibrary/square.h>
+#include <mylibrary/multiplier.h>
+#include <mylibrary/SideWallLeft.h>
+#include <mylibrary/SideWallRight.h>
 
 #include "Box2D/Box2D.h"
 #include "cinder/gl/gl.h"
@@ -15,35 +18,46 @@ namespace myapp {
 using namespace ci;
 
 const float BOX_SIZE = 10;
-
+b2Body* groundBody;
 b2World* myWorld;
 std::vector<square> myBox;
 std::vector<line> myLine;
 std::vector<LShape> myLShape;
 std::vector<Bomb> myBomb;
+std::vector<multiplier> myMultiplier;
+std::vector<SideWallRight> rightWall;
+std::vector<SideWallLeft> leftWall;
 MyApp::MyApp() {}
 
 void MyApp::setup() {
   b2Vec2 gravity(0.0f, 9.8f);
   myWorld = new b2World(gravity);
   b2BodyDef groundBodyDef;
-  groundBodyDef.position.Set(0.0f, getWindowHeight());
-  b2Body* groundBody = myWorld->CreateBody(&groundBodyDef);
+  groundBodyDef.position.Set(0.0f, getWindowHeight()-10);
+   groundBody = myWorld->CreateBody(&groundBodyDef);
 
   b2PolygonShape groundBox;
   groundBox.SetAsBox(getWindowWidth(), 10.0f);
   groundBody->CreateFixture(&groundBox, 0.0f);
+  SideWallLeft left(myWorld, getWindowHeight());
+  leftWall.push_back(left);
+  SideWallRight right(myWorld, getWindowHeight());
+  rightWall.push_back(right);
+
 }
 
 void MyApp::mouseDown(cinder::app::MouseEvent event) {
   LShape lShape(myWorld, event.getPos());
   square square(myWorld, event.getPos());
   line line(myWorld, event.getPos());
+  multiplier m(myWorld, event.getPos());
   Bomb nShape(myWorld, event.getPos());
-//  myLine.push_back(line);
-//  myBox.push_back(square);
-//  myLShape.push_back(lShape);
+  myLine.push_back(line);
+  myBox.push_back(square);
+  myLShape.push_back(lShape);
   myBomb.push_back(nShape);
+  myMultiplier.push_back(m);
+
 }
 void MyApp::update() {
   for (int i = 0; i < 10; ++i) {
@@ -53,10 +67,14 @@ void MyApp::update() {
 
 void MyApp::draw() {
   gl::clear();
+
+  DrawRightWall();
+  DrawLeftWall();
   DrawSquare();
   DrawLine();
   DrawLShape();
   DrawBomb();
+  DrawMultiplier();
 }
 void MyApp::DrawLShape() {
   for (const auto& l : myLShape) {
@@ -183,6 +201,39 @@ void MyApp::DrawBomb() {
     gl::popModelMatrix();
   }
 
+}
+void MyApp::DrawMultiplier() {
+  for (const auto& nShape : myMultiplier) {
+    gl::pushModelMatrix();
+    gl::translate(nShape.m_body->GetPosition().x, nShape.m_body->GetPosition().y);
+    gl::rotate(nShape.m_body->GetAngle());
+
+//    gl::drawSolidTriangle(vec2(0, 0), vec2(10.0f, 0.0f), vec2(0.0f, 10.0f));
+//    PolyLine2f pi;
+//    pi.push_back(vec2(0.0f, 0.0f));
+//    pi.push_back(vec2(100.0f, 0.0f));
+//    pi.push_back(vec2(0.0f, 100.0f));
+//    gl::drawSolid(pi);
+    gl::color(1, 1, 0);
+    gl::drawSolidTriangle(vec2(0,100),vec2(0,0),vec2(100,0));
+
+    gl::popModelMatrix();
+  }
+}
+void MyApp::DrawLeftWall() {
+  gl::pushModelMatrix();
+  gl::color(1,1,1);
+
+  gl::drawSolidRect(Rectf(-10,getWindowHeight(),10,-getWindowHeight()));
+  gl::popModelMatrix();
+}
+void MyApp::DrawRightWall() {
+  gl::pushModelMatrix();
+  gl::translate(rightWall[0].m_body->GetPosition().x, rightWall[0].m_body->GetPosition().y);
+  gl::color(1,1,1);
+
+  gl::drawSolidRect(Rectf(-10,getWindowHeight(),10,-getWindowHeight()));
+  gl::popModelMatrix();
 }
 
 }  // namespace myapp

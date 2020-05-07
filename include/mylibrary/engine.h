@@ -24,21 +24,29 @@ class engine {
   Direction direction;
  public:
   engine();
-  engine(b2World* world, std::vector<square>& mySquare, std::vector<line>& myLine,
-         std::vector<LShape>& myLShape, std::vector<Bomb>& myBomb, std::vector<TShape>& myTShape,
-         std::vector<ZShape>& myZShape, std::vector<SShape>& mySShape);
+  engine(b2World* world, std::vector<square*>& mySquare, std::vector<line*>& myLine,
+         std::vector<LShape*>& myLShape, std::vector<Bomb*>& myBomb, std::vector<TShape*>& myTShape,
+         std::vector<ZShape*>& myZShape, std::vector<SShape*>& mySShape);
   b2World* myWorld;
-  std::vector<square>* myS;
-  std::vector<line>* myL;
-  std::vector<LShape>* myLS;
-  std::vector<Bomb>* myB;
-  std::vector<TShape>* myT;
-  std::vector<ZShape>* myZ;
-  std::vector<SShape>  * mySS;
+  std::vector<square*>* myS;
+  std::vector<line*>* myL;
+  std::vector<LShape*>* myLS;
+  std::vector<Bomb*>* myB;
+  std::vector<TShape*>* myT;
+  std::vector<ZShape*>* myZ;
+  std::vector<SShape*>  * mySS;
   b2Body* currentBody;
   Shape* currentShape;
   Shape* ChooseBlock();
+  /**
+   * Sets the direction based on the key pressed
+   * @param direction the direction the user wants to go.
+   */
   void SetDirection(const myapp::Direction direction);
+  /**
+   * Moves the object the given direction
+   * @param direction Direction object should move
+   */
   void MoveObject(const myapp::Direction direction);
 
   void RemoveDrawing(std::vector<b2Body*> toDestroy);

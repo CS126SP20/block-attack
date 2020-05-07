@@ -16,6 +16,7 @@ class LShape : public Shape{
 
  public:
   LShape(b2World* world, const vec2 &pos);
+  int lid = -89;
   b2Body* m_body;
 };
 

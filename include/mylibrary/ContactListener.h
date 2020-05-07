@@ -12,6 +12,8 @@ class ContactListener : public b2ContactListener {
  public:
   void BeginContact(b2Contact* contact) override;
   std::vector<b2Body*> toDestroy;
+  int id_fixtureA = -1;
+  int id_fixtureB = -1;
 
   };
 }  // namespace game

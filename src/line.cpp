@@ -16,12 +16,13 @@ line::line(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
   GetShapeType = 5;
+  liid = myapp::id++ + 600;
   m_body->SetUserData(this);
   b2PolygonShape dynamicBox;
   dynamicBox.SetAsBox(100, 25);
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &dynamicBox;
-  fixtureDef.density = 1.0f;
+  fixtureDef.density = 10.0f;
   fixtureDef.friction = 0.0f;
   fixtureDef.restitution = 0.0f;  // bounce
   m_body->CreateFixture(&fixtureDef);

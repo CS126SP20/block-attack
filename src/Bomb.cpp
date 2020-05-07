@@ -16,6 +16,7 @@ Bomb::Bomb(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
   GetShapeType = 6;
+  bid = myapp::id++ + 700;
   m_body->SetUserData(this);
   b2CircleShape cs;
   cs.m_p.Set(0,0);

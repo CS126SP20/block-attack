@@ -16,6 +16,7 @@ TShape::TShape(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
   GetShapeType =2;
+  Tid = myapp::id++ + 200;
   m_body->SetUserData(this);
   b2PolygonShape dynamicBox;
   dynamicBox.SetAsBox(25, 75);

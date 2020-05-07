@@ -16,9 +16,8 @@ class Bomb : public Shape{
   bool m_contacting;
  public:
   Bomb(b2World* world, const vec2 &pos);
+  int bid;
   b2Body* m_body;
-  void startContact();
-  std::string m_color;
 
 };
 

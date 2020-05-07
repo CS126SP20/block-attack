@@ -20,6 +20,7 @@ square::square(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
   GetShapeType = 0;
+  sid = myapp::id++ + 400;
   m_body->SetUserData(this);
   b2PolygonShape dynamicBox;
   dynamicBox.SetAsBox(50, 50);

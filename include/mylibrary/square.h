@@ -17,6 +17,7 @@ class square : public Shape{
   square::square();
   square(b2World* world, const vec2 &pos);
     b2Body* m_body;
+    int sid;
 
 };
 

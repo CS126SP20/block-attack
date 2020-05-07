@@ -13,6 +13,7 @@ using namespace ci;
 
 class line : public Shape{
  public:
+  int liid;
   line(b2World* world, const vec2 &pos);
   b2Body* m_body;
   void SetRemove();

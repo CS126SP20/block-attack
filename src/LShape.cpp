@@ -3,6 +3,7 @@
 //
 
 #include "mylibrary/LShape.h"
+#include "mylibrary/Shape.h"
 #include "cinder/gl/gl.h"
 #include <string>
 LShape::LShape(b2World* world, const vec2& pos) {
@@ -15,8 +16,8 @@ LShape::LShape(b2World* world, const vec2& pos) {
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
   GetShapeType = 4;
+  lid = myapp::id++ + 500;
   m_body->SetUserData(this);
-
   b2PolygonShape dynamicBox;
   dynamicBox.SetAsBox(25, 75);
   b2FixtureDef fixtureDef;

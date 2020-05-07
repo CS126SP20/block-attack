@@ -7,6 +7,10 @@
 #include <string>
 #include <cinder/gl/gl.h>
 using namespace cinder;
+namespace myapp {
+static int id = 0;
+};//namespace myapp
+
 class Shape {
  public:
   bool is_collided = false;
@@ -15,5 +19,4 @@ class Shape {
   bool MarkForDelete = false;
   bool is_collided_end = false;
 };
-
 #endif  // FINALPROJECT_SHAPE_H

@@ -12,4 +12,6 @@ for the game including adding walls and boundaries <p>
 <p>4/30/2020: Began creating engine and worked on movement of body for player.</p>
 <p>5/1/2020: Worked on Collision Callback for each collision of a block</p>
 <p>5/3/2020: Continued work on collision callback and began implementing 2 block disappear logic</p>
+<p>5/4/2020: Worked on implementation of score and end game </p>
+<p>5/6/2020: Worked on tests for individual classes</p>
 ---

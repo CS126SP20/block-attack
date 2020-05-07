@@ -16,6 +16,7 @@ class SShape : public Shape {
  public:
   SShape(b2World* world,const vec2 &pos);
   b2Body* m_body;
+  int SSid;
 
 };
 

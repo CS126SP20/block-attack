@@ -27,15 +27,15 @@ namespace myapp {
 
 b2Vec2 gravity(0.0f, 0.1f);
 b2World* myWorld = new b2World(gravity);
-std::vector<square> mySquare;
-std::vector<line> myLine;
-std::vector<LShape> myLShape;
-std::vector<Bomb> myBomb;
+std::vector<square*> mySquare;
+std::vector<line*> myLine;
+std::vector<LShape*> myLShape;
+std::vector<Bomb*> myBomb;
 std::vector<SideWallRight> rightWall;
 std::vector<SideWallLeft> leftWall;
-std::vector<TShape> myTShape;
-std::vector<SShape> mySShape;
-std::vector<ZShape> myZShape;
+std::vector<TShape*> myTShape;
+std::vector<SShape*> mySShape;
+std::vector<ZShape*> myZShape;
 cinder::audio::VoiceRef mVoice;
 bool gameState = false;
 ContactListener contactListener;
@@ -88,16 +88,16 @@ void MyApp::keyDown(app::KeyEvent event) {
 void MyApp::update() {
   if (currentShape->is_collided) {
     currentShape->is_collided = false;
-    if (contactListener.toDestroy.size() >= 1) {
-      currentScore += 10;
-//    engine_.RemoveDrawing(contactListener.toDestroy);
-    myWorld->DestroyBody(contactListener.toDestroy[0]);
-    myWorld->DestroyBody(contactListener.toDestroy[1]);
-    contactListener.toDestroy.clear();
-    }
     currentShape = engine_.ChooseBlock();
   } else if (currentShape->is_collided_end) {
     gameState = false;
+  }
+  if (contactListener.toDestroy.size() >= 1) {
+    currentScore += 10;
+    MyApp::RemoveDrawing();
+    myWorld->DestroyBody(contactListener.toDestroy[0]);
+    myWorld->DestroyBody(contactListener.toDestroy[1]);
+    contactListener.toDestroy.clear();
   }
   for (int i = 0; i < 10; ++i) {
     myWorld->Step(1 / 30.0f, 10, 10);
@@ -154,9 +154,9 @@ void MyApp::DrawScore() {
 void MyApp::DrawLShape() {
   for (const auto& l : myLShape) {
     gl::pushModelMatrix();
-    gl::translate(l.m_body->GetPosition().x, l.m_body->GetPosition().y);
-    gl::rotate(l.m_body->GetAngle());
-    gl::color(l.color);
+    gl::translate(l->m_body->GetPosition().x, l->m_body->GetPosition().y);
+    gl::rotate(l->m_body->GetAngle());
+    gl::color(l->color);
     PolyLine2f pi;
     pi.push_back(vec2(25, 75));
     pi.push_back(vec2(25, -75));
@@ -186,14 +186,14 @@ void MyApp::DrawLShape() {
 }
 void MyApp::DrawSquare() {
   for (const auto& box : mySquare) {
-    if (box.MarkForDelete) {
+    if (box->MarkForDelete) {
       continue;
     }
     gl::pushModelMatrix();
-    gl::translate(box.m_body->GetPosition().x, box.m_body->GetPosition().y);
-    gl::rotate(box.m_body->GetAngle());
+    gl::translate(box->m_body->GetPosition().x, box->m_body->GetPosition().y);
+    gl::rotate(box->m_body->GetAngle());
 
-    gl::color(box.color);
+    gl::color(box->color);
 
     gl::drawSolidRect(Rectf(-50, -50, 50, 50));
 
@@ -213,14 +213,14 @@ void MyApp::DrawSquare() {
 }
 void MyApp::DrawLine() {
   for (const auto& line : myLine) {
-    if (line.remove) {
+    if (line->remove) {
       continue;
     }
     gl::pushModelMatrix();
-    gl::translate(line.m_body->GetPosition().x, line.m_body->GetPosition().y);
-    gl::rotate(line.m_body->GetAngle());
+    gl::translate(line->m_body->GetPosition().x, line->m_body->GetPosition().y);
+    gl::rotate(line->m_body->GetAngle());
 
-    gl::color(line.color);
+    gl::color(line->color);
 
     gl::drawSolidRect(Rectf(-100, -25, 100, 25));
 
@@ -241,15 +241,12 @@ void MyApp::DrawLine() {
 }
 void MyApp::DrawBomb() {
   for (const auto& nShape : myBomb) {
-    if (nShape.MarkForDelete) {
-      continue;
-    }
     gl::pushModelMatrix();
-    gl::translate(nShape.m_body->GetPosition().x,
-                  nShape.m_body->GetPosition().y);
-    gl::rotate(nShape.m_body->GetAngle());
+    gl::translate(nShape->m_body->GetPosition().x,
+                  nShape->m_body->GetPosition().y);
+    gl::rotate(nShape->m_body->GetAngle());
 
-    gl::color(nShape.color);
+    gl::color(nShape->color);
     gl::drawSolidCircle(vec2(0, 0), 50.0f);
 
     gl::popModelMatrix();
@@ -274,10 +271,10 @@ void MyApp::DrawRightWall() {
 void MyApp::DrawTShape() {
   for (const auto& l : myTShape) {
     gl::pushModelMatrix();
-    gl::translate(l.m_body->GetPosition().x, l.m_body->GetPosition().y);
-    gl::rotate(l.m_body->GetAngle());
+    gl::translate(l->m_body->GetPosition().x, l->m_body->GetPosition().y);
+    gl::rotate(l->m_body->GetAngle());
 
-    gl::color(l.color);
+    gl::color(l->color);
     PolyLine2f pi;
     pi.push_back(vec2(25, 75));
     pi.push_back(vec2(25, -75));
@@ -309,9 +306,9 @@ void MyApp::DrawZShape() {
   for (const auto& box : myZShape) {
 
     gl::pushModelMatrix();
-    gl::translate(box.m_body->GetPosition().x, box.m_body->GetPosition().y);
-    gl::rotate(box.m_body->GetAngle());
-    gl::color(box.color);
+    gl::translate(box->m_body->GetPosition().x, box->m_body->GetPosition().y);
+    gl::rotate(box->m_body->GetAngle());
+    gl::color(box->color);
 
     PolyLine2f pi;
     pi.push_back(vec2(25, 50));
@@ -344,10 +341,10 @@ void MyApp::DrawSShape() {
   for (const auto& box : mySShape) {
 
     gl::pushModelMatrix();
-    gl::translate(box.m_body->GetPosition().x, box.m_body->GetPosition().y);
-    gl::rotate(box.m_body->GetAngle());
+    gl::translate(box->m_body->GetPosition().x, box->m_body->GetPosition().y);
+    gl::rotate(box->m_body->GetAngle());
 
-    gl::color(box.color);
+    gl::color(box->color);
 
     PolyLine2f pi;
     pi.push_back(vec2(25, 50));
@@ -374,6 +371,59 @@ void MyApp::DrawSShape() {
     gl::vertex(75, 50);
     gl::end();
     gl::popModelMatrix();
+  }
+}
+void MyApp::RemoveDrawing() {
+  for (int i = 0; i < myLShape.size(); i++) {
+    if (myLShape[i]->lid == contactListener.id_fixtureA || myLShape[i]->lid == contactListener.id_fixtureB) {
+      std::swap(myLShape[i], myLShape.back());
+      myLShape.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < mySquare.size(); i++) {
+    if (mySquare[i]->sid == contactListener.id_fixtureA || mySquare[i]->sid == contactListener.id_fixtureB) {
+      std::swap(mySquare[i], mySquare.back());
+      mySquare.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < myBomb.size(); i++) {
+    if (myBomb[i]->bid == contactListener.id_fixtureA || myBomb[i]->bid == contactListener.id_fixtureB) {
+      std::swap(myBomb[i], myBomb.back());
+      myBomb.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < myTShape.size(); i++){
+    int j = myTShape[i]->Tid;
+  if (myTShape[i]->Tid == contactListener.id_fixtureA || myTShape[i]->Tid == contactListener.id_fixtureB) {
+      std::swap(myTShape[i], myTShape.back());
+      myTShape.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < myZShape.size(); i++) {
+    if (myZShape[i]->Zid == contactListener.id_fixtureA || myZShape[i]->Zid == contactListener.id_fixtureB) {
+      std::swap(myZShape[i], myZShape.back());
+      myZShape.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < mySShape.size(); i++) {
+    if (mySShape[i]->SSid == contactListener.id_fixtureB || mySShape[i]->SSid == contactListener.id_fixtureA) {
+      std::swap(mySShape[i], mySShape.back());
+      mySShape.pop_back();
+      i--;
+    }
+  }
+  for (int i = 0; i < myLine.size(); i++) {
+    int j = myLine[i]->liid;
+    if (myLine[i]->liid == contactListener.id_fixtureB || myLine[i]->liid == contactListener.id_fixtureA) {
+      std::swap(myLine[i], myLine.back());
+      myLine.pop_back();
+      i--;
+    }
   }
 }
 }  // namespace myapp

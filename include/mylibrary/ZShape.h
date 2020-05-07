@@ -17,6 +17,7 @@ class ZShape : public Shape{
  public:
   ZShape(b2World* world, const vec2 &pos);
   b2Body* m_body;
+  int Zid;
 
 };
 

@@ -13,8 +13,8 @@ using cinder::app::RendererGl;
 namespace myapp {
 
 const int kSamples = 8;
-const int kWidth = 900;
-const int kHeight = 900;
+const int kWidth = 850;
+const int kHeight = 850;
 
 void SetUp(App::Settings* settings) {
   settings->setWindowSize(kWidth, kHeight);

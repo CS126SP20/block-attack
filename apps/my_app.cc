@@ -25,7 +25,7 @@
 #include "cinder/gl/gl.h"
 namespace myapp {
 
-b2Vec2 gravity(0.0f, 0.1f);
+b2Vec2 gravity(0.0f, 0.3f);
 b2World* myWorld = new b2World(gravity);
 std::vector<square*> mySquare;
 std::vector<line*> myLine;
@@ -37,7 +37,8 @@ std::vector<TShape*> myTShape;
 std::vector<SShape*> mySShape;
 std::vector<ZShape*> myZShape;
 cinder::audio::VoiceRef mVoice;
-bool gameState = false;
+bool gameOver = false;
+bool gameStart = false;
 ContactListener contactListener;
 engine engine_(myWorld, mySquare, myLine, myLShape, myBomb,
                myTShape, myZShape, mySShape);
@@ -58,7 +59,7 @@ void MyApp::setup() {
       (loadAsset("bensound-funkyelement.mp3"));
   mVoice = cinder::audio::Voice::create(sourceFile);
   mVoice->start();
-  gameState = true;
+  gameStart = true;
 }
 
 void MyApp::keyDown(app::KeyEvent event) {
@@ -90,7 +91,7 @@ void MyApp::update() {
     currentShape->is_collided = false;
     currentShape = engine_.ChooseBlock();
   } else if (currentShape->is_collided_end) {
-    gameState = false;
+    gameOver = false;
   }
   if (contactListener.toDestroy.size() >= 1) {
     currentScore += 10;
@@ -124,7 +125,18 @@ void PrintText(const string& text, const Color& color, const cinder::ivec2& size
 }
 
 void MyApp::draw() {
-  if (!gameState) {
+    gl::clear();
+    DrawRightWall();
+    DrawLeftWall();
+    DrawSquare();
+    DrawLine();
+    DrawLShape();
+    DrawBomb();
+    DrawTShape();
+    DrawZShape();
+    DrawSShape();
+    DrawScore();
+  if (gameOver) {
     gl::clear();
     const cinder::vec2 center = getWindowCenter();
     const cinder::ivec2 size = {500, 50};
@@ -132,17 +144,7 @@ void MyApp::draw() {
     PrintText("Game over", white, size, center);
     DrawScore();
   }
-  gl::clear();
-  DrawRightWall();
-  DrawLeftWall();
-  DrawSquare();
-  DrawLine();
-  DrawLShape();
-  DrawBomb();
-  DrawTShape();
-  DrawZShape();
-  DrawSShape();
-  DrawScore();
+
 }
 void MyApp::DrawScore() {
   std::stringstream ss;

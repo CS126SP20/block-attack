@@ -28,6 +28,7 @@ class MyApp : public cinder::app::App {
   void DrawZShape();
   void DrawSShape();
   void RemoveDrawing();
+  void DrawTimer() const;
 };
 
 }  // namespace myapp

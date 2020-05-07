@@ -7,7 +7,7 @@
 
 Ceiling::Ceiling(b2World* world, int height, int width) {
   b2BodyDef ceilingBodyDef;
-  ceilingBodyDef.position.Set(0.0, -height);
+  ceilingBodyDef.position.Set(width, height);
   ceilingBodyDef.type = b2_staticBody;
   body = world->CreateBody(&ceilingBodyDef);
 

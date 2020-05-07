@@ -11,6 +11,7 @@ using namespace std;
 class Ceiling : public Shape{
  public:
   Ceiling(b2World* world, int height, int width);
+  b2Body* body;
 };
 
 #endif  // FINALPROJECT_Ceiling_H

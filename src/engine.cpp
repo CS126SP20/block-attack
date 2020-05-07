@@ -9,6 +9,7 @@
 #include <mylibrary/TShape.h>
 #include <mylibrary/Shape.h>
 namespace myapp {
+myapp::engine::engine() = default;
 myapp::engine::engine(b2World* world, std::vector<square>& mySquare,
                std::vector<line>& myLine, std::vector<LShape>& myLShape,
                std::vector<Bomb>& myBomb, std::vector<TShape>& myTShape, std::vector<ZShape>& myZShape,

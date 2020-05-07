@@ -3,11 +3,16 @@
 //
 
 #include "mylibrary/SideWallRight.h"
-SideWallRight::SideWallRight(b2World *world, int size) {
+#include <string>
+SideWallRight::SideWallRight(b2World *world, float size, float width) {
   b2BodyDef sideWallRightDef;
-  sideWallRightDef.position.Set(size,0.0f);
+  sideWallRightDef.type = b2_staticBody;
+  sideWallRightDef.position.Set(size,width);
   m_body = world->CreateBody(&sideWallRightDef);
   b2PolygonShape sideWallRight;
   sideWallRight.SetAsBox(10.0f, size);
   m_body->CreateFixture(&sideWallRight, 0.0f);
+  GetShapeType = -1;
+  m_body->SetUserData(this);
+
 }

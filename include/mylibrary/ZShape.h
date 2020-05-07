@@ -2,8 +2,8 @@
 // Created by faris on 4/26/2020.
 //
 
-#ifndef FINALPROJECT_LSHAPE_H
-#define FINALPROJECT_LSHAPE_H
+#ifndef FINALPROJECT_ZSHAPE_H
+#define FINALPROJECT_ZSHAPE_H
 
 #include <Box2D/Box2D.h>
 #include <vector>
@@ -12,11 +12,12 @@
 
 using namespace ci;
 
-class LShape : public Shape{
+class ZShape : public Shape{
 
  public:
-  LShape(b2World* world, const vec2 &pos);
+  ZShape(b2World* world, const vec2 &pos);
   b2Body* m_body;
+
 };
 
 

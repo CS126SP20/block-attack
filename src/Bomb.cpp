@@ -15,16 +15,17 @@ Bomb::Bomb(b2World* world, const vec2& pos) {
   myBodyDef.type = b2_dynamicBody;
   myBodyDef.position.Set(pos.x, pos.y);
   m_body = world->CreateBody(&myBodyDef);
-
+  GetShapeType = 6;
+  m_body->SetUserData(this);
   b2CircleShape cs;
   cs.m_p.Set(0,0);
   cs.m_radius = 50.0f;
   b2FixtureDef fixtureDef;
   fixtureDef.shape = &cs;
   fixtureDef.density = 1.0f;
+  fixtureDef.restitution = 0.0f;
+  fixtureDef.friction = 0.0f;
   m_body->CreateFixture(&fixtureDef);
-
-
-
+  m_contacting = false;
 }
 

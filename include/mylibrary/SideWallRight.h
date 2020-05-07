@@ -7,12 +7,12 @@
 #include <Box2D/Box2D.h>
 #include <vector>
 #include <cinder/gl/gl.h>
+#include <mylibrary/Shape.h>
 using namespace ci;
-class SideWallRight {
-  const float BOX_SIZE = 10;
+class SideWallRight : public Shape{
 
  public:
-  SideWallRight(b2World* world, int size);
+  SideWallRight(b2World* world, float size, float width);
   b2Body* m_body;
 
 };

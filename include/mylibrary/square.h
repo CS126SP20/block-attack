@@ -8,14 +8,14 @@
 #include <Box2D/Box2D.h>
 #include <vector>
 #include <cinder/gl/gl.h>
-
+#include <mylibrary/Shape.h>
 using namespace ci;
 
-class square {
-    const float BOX_SIZE = 10;
+class square : public Shape{
 
  public:
-    square(b2World* world, const vec2 &pos);
+  square::square();
+  square(b2World* world, const vec2 &pos);
     b2Body* m_body;
 
 };

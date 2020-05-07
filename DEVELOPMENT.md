@@ -7,6 +7,9 @@ for the game including adding walls and boundaries <p>
 <p>4/26/2020: Created LShape block with all physics elements and rendering in openGL</p>
 <p>4/27/2020: Created Line blcok with all physics elements andd rendering in openGL</p>
 <p>4/28/2020: Started work on bomb block</p>
-<p>4/29/2020: Completed work on bomb block and created and finished multiplier block and made walls and ground for game </p>
+<p>4/29/2020: Completed work on bomb block and created blocks and made walls and ground for game </p>
 <p>Starting work on engine and design of actual game</p>
+<p>4/30/2020: Began creating engine and worked on movement of body for player.</p>
+<p>5/1/2020: Worked on Collision Callback for each collision of a block</p>
+<p>5/3/2020: Continued work on collision callback and began implementing 2 block disappear logic</p>
 ---

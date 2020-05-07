@@ -8,13 +8,15 @@
 #include <Box2D/Box2D.h>
 #include <vector>
 #include <cinder/gl/gl.h>
-
+#include <mylibrary/Shape.h>
 using namespace ci;
 
-class line {
+class line : public Shape{
  public:
   line(b2World* world, const vec2 &pos);
   b2Body* m_body;
+  void SetRemove();
+  bool remove = false;
 };
 
 #endif  // FINALPROJECT_LINE_H

@@ -13,12 +13,12 @@ using cinder::app::RendererGl;
 namespace myapp {
 
 const int kSamples = 8;
-const int kWidth = 1000;
-const int kHeight = 1000;
+const int kWidth = 900;
+const int kHeight = 900;
 
 void SetUp(App::Settings* settings) {
   settings->setWindowSize(kWidth, kHeight);
-  settings->setTitle("My CS 126 Application");
+  settings->setTitle("Block Attack");
 }
 
 }  // namespace myapp

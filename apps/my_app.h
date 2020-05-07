@@ -15,15 +15,20 @@ class MyApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
-  void mouseDown(cinder::app::MouseEvent event) override;
+  void keyDown(cinder::app::KeyEvent event) override;
   void DrawSquare();
   void DrawLine();
   void DrawLShape();
   void DrawBomb();
-  void DrawMultiplier();
   void DrawLeftWall();
   void DrawRightWall();
+  void DrawScore();
 
+  void DrawTShape();
+  void DrawZShape();
+  void DrawSShape();
+
+    void RemoveDrawing();
 };
 
 }  // namespace myapp
